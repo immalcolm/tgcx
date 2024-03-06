@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Reading of JSON</title>
+    <script>
+        const COMPLEXDATA = 'complex-data.json';
+        const SIMPLEDATA = 'simple-data.json';
+        printSimpleData();
+     
+        //printComplexData();
+        function printComplexData(){
+            fetch(COMPLEXDATA)
+            .then(response => response.json())
+            .then(data => {
+                Object.entries(data["fruits"]).forEach(([key, value]) => {
+                    //console.log(`${key}: ${value}`);
+                    Object.entries(value).forEach(([key, value]) => {
+                        console.log(`${key}: ${value}`);
+                    });
+                });
+               // console.log(data);
+            });
+        }
+       
+        //1. fetch(URL/path/data) >> promise happening for retrieval of information
+        //2. .then(response=>respone.json()) ---> convert the response to json
+        //3. .then(data=>{console.log(data)}) ---> print the data
+
+
+        function printSimpleData() {
+            fetch("https://raw.githubusercontent.com/kunxin-chor/data-files-and-stuff/master/json-simple.json") 
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    //retrieve the key
+                    data["fruits"].forEach((currentElement, index) => {
+                        console.log(currentElement);
+                    });
+
+                   // array.forEach((currentElement, index) => { /* ... */ })
+
+                });
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
