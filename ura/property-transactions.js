@@ -3,9 +3,9 @@
 //3. get ura inputs using token
 
 //const axios = require('axios');
-const cors_proxy = "http://0.0.0.0:8080/";
+const cors_proxy = "https://tgx-cors-demo.onrender.com/";
 const accessTokenURL = "https://www.ura.gov.sg/uraDataService/insertNewToken.action";
-
+const accessKey = "e60d2cf5-8a2e-4be8-8a77-b292cbed12b5";
 //getToken();
 
 
@@ -21,11 +21,11 @@ async function getToken() {
     let token = localStorage.getItem("token");
 
     //@TODO check whether token to use.. 
-
-
     if (token === null) {
         console.log("getting token from URA");
         token = await getAccessToken();
+
+        console.log(token)//print out token.
     }
 
     //process token
@@ -77,13 +77,13 @@ async function getAccessToken() {
 
 async function getUraInputs(token) {
     //const token = localStorage.getItem("token");
-    console.log('from URA Inputs' + token);
+    console.log('from URA Inputs with token: ' + token);
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
         url: `${cors_proxy}https://www.ura.gov.sg/uraDataService/invokeUraDS?service=PMI_Resi_Transaction&batch=1`,
         headers: {
-            'AccessKey': 'e60d2cf5-8a2e-4be8-8a77-b292cbed12b5',
+            'AccessKey': accessKey,
             'Token': token,
             'X-Requested-With': 'XMLHttpRequest'
         }
