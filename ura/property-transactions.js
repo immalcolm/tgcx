@@ -93,6 +93,8 @@ async function getUraInputs(token) {
         const response = await axios.request(config);
         console.log("gettign data");
         console.log(response);
+        document.getElementById("ura-data").innerHTML = JSON.stringify(response.data);
+        //@TODO cleanup or filter data
         //@TODO output to HTML
         
     } catch (error) {
