@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Chart Demo</title>
+</head>
+
+<body>
+    <h1>Apex Chart Demo</h1>
+    <div id="chart">
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <!-- insert our apex chart script -->
+    <script>
+        var options = {
+            chart: {
+                type: 'candlestick'
+            },
+            series: [{
+                data: [{
+                    x: new Date(2016, 01, 01),
+                    y: [51.98, 56.29, 51.59, 53.85]
+                },
+                {
+                    x: new Date(2016, 02, 01),
+                    y: [53.66, 54.99, 51.35, 52.95]
+                }],
+            }],
+
+            plotOptions: {
+                candlestick: {
+                    colors: {
+                        upward: '#3C90EB',
+                        downward: '#DF7D46'
+                    },
+                    wick: {
+                        useFillColor: true,
+                    }
+                }
+            }
+        }
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+        chart.render();
+    </script>
+</body>
+
+</html>
