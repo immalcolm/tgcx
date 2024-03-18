@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        axios.get('response.json') // Replace with the actual URL
+            .then(response => {
+                //console.log(response.data); // response.data contains the JSON data
+                // You can further process the data here
+                const filteredData = response.data.filter(
+                    item => new Date(item.data_trade_end) > new Date('2024-03') &&
+                        item.price_usd !== undefined &&
+                        item.price_usd > 60000 &&
+                        item.type_is_crypto == 1
+                )
+                    .map(({ asset_id, name, data_trade_end, price_usd }) => ({
+                        asset_id,
+                        name,
+                        data_trade_end,
+                        price_usd
+                    }));
+
+                console.log(filteredData);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+
+    </script>
+</body>
+
+</html>

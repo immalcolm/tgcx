@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="chart"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+    <script>
+        axios.get('response-btc-eth.json') // Replace with the actual URL
+            .then(response => {
+                //insert our formula to format the data neatly 
+                //and then create our chart
+                //process our data from the json file 
+                const data = convertDataToChartFormat(response.data);
+                
+                let tempArray = [];
+                //for every cleanedup data .. pump into the temp Array
+                //this temp array will be used as the data for our chart
+                for (let i = 0; i < data.length; i++) {
+                    tempArray.push(data[i]);
+                }   
+
+                //setup our chart options
+                var options = {
+                    chart: {
+                        type: 'candlestick'
+                    },
+                    series: tempArray,//cleanup data
+                    plotOptions: {
+                        candlestick: {
+                            colors: {
+                                upward: '#3C90EB',
+                                downward: '#DF7D46'
+                            },
+                            wick: {
+                                useFillColor: true,
+                            }
+                        }
+                    }
+                }
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+                
+            })
+
+            .catch(error => console.error('Error fetching data:', error));
+
+
+
+        function convertDataToChartFormat(data) {
+            return data.map(item => {
+                return {
+                    data: [{
+                        x: new Date(item.time_close),
+                        y: [item.rate_open, item.rate_high, item.rate_low, item.rate_close]
+                    }]
+                };
+            });
+        }
+    </script>
+</body>
+
+</html>
